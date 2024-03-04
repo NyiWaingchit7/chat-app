@@ -1,1 +1,1 @@
-//server site
+//server side
