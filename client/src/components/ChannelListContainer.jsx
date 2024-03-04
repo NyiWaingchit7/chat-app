@@ -2,6 +2,9 @@ import React from "react";
 import Hospital from "../asset/hospital.png";
 import Logout from "../asset/logout.png";
 import ChannelSearch from "./ChannelSearch";
+import { ChannelList } from "stream-chat-react";
+import TeamChannelList from "./TeamChannelList";
+import TeamChannelPreview from "./TeamChannelPreview";
 const SideBar = () => {
   return (
     <div className="channel-list__sidebar">
@@ -32,6 +35,24 @@ const ChannelListContainer = () => {
       <div className="channel-list__list__wrapper">
         <CompanyHeader />
         <ChannelSearch />
+        <ChannelList
+          filters={{}}
+          channelRenderFilterFn={() => {}}
+          List={(listPorps) => <TeamChannelList {...listPorps} type="team" />}
+          Preview={(previewProps) => (
+            <TeamChannelPreview {...previewProps} type="team" />
+          )}
+        />
+        <ChannelList
+          filters={{}}
+          channelRenderFilterFn={() => {}}
+          List={(listPorps) => (
+            <TeamChannelList {...listPorps} type="mesaging" />
+          )}
+          Preview={(previewProps) => (
+            <TeamChannelPreview {...previewProps} type="mesaging" />
+          )}
+        />
       </div>
     </>
   );
