@@ -2,6 +2,8 @@ import crypto from "crypto";
 import { connect } from "getstream";
 import bcrypt from "bcrypt";
 import { StreamChat } from "stream-chat";
+import dotenv from "dotenv";
+dotenv.config();
 const apiKey = process.env.STEAM_API_KEY;
 const appId = process.env.STEAM_APP_ID;
 const apiSecret = process.env.STREAM_API_SECRET;

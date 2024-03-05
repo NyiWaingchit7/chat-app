@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import SiginImage from "../asset/signup.jpg";
+import axios from "axios";
+import Cookies from "universal-cookie";
 const defaultUserForm = {
   fullName: "",
   userName: "",
@@ -8,15 +10,37 @@ const defaultUserForm = {
   password: "",
   confirmPassword: "",
 };
+const cookie = new Cookies();
+
 const Auth = () => {
   const [singUp, setSignup] = useState(true);
   const [userForm, setUserForm] = useState(defaultUserForm);
   const handleOnChange = (e) => {
     setUserForm({ ...userForm, [e.target.name]: e.target.value });
   };
-  const handleOnSumbit = (e) => {
+  const handleOnSumbit = async (e) => {
+    const url = process.env.REACT_APP_API_URL;
     e.preventDefault();
-    console.log(userForm);
+    const { fullName, userName, password, avatarUrl, phoneNumber } = userForm;
+    const {
+      data: { userId, hashedPassword, token },
+    } = await axios.post(`${url}/auth/signup`, {
+      fullName,
+      userName,
+      password,
+      avatarUrl,
+      phoneNumber,
+    });
+    cookie.set("token", token);
+    cookie.set("userId", userId);
+    cookie.set("userName", userName);
+    cookie.set("fullName", fullName);
+    if (singUp) {
+      cookie.set("phoneNumber", phoneNumber);
+      cookie.set("hashedPassword", hashedPassword);
+      cookie.set("avatarUrl", avatarUrl);
+    }
+    window.location.reload();
   };
   return (
     <div className="auth__form-container">
@@ -48,7 +72,7 @@ const Auth = () => {
             </div>
             {singUp && (
               <div className="auth__form-container_fields-content_input">
-                <label htmlFor="phoneNumber">Full Name</label>
+                <label htmlFor="phoneNumber">Phone Number</label>
                 <input
                   type="text"
                   placeholder="Phone Number"
