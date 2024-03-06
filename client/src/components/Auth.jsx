@@ -21,25 +21,28 @@ const Auth = () => {
   const handleOnSumbit = async (e) => {
     const url = process.env.REACT_APP_API_URL;
     e.preventDefault();
-    const { fullName, userName, password, avatarUrl, phoneNumber } = userForm;
+    console.log(userForm);
     const {
-      data: { userId, hashedPassword, token },
-    } = await axios.post(`${url}/auth/signup`, {
-      fullName,
-      userName,
-      password,
-      avatarUrl,
-      phoneNumber,
+      data: {
+        userId,
+        fullName,
+        userName,
+        token,
+        hashedPassword,
+        phoneNumber,
+        avatarUrl,
+      },
+    } = await axios.post(`${url}/auth/${singUp ? "signup" : "login"}`, {
+      ...userForm,
     });
     cookie.set("token", token);
     cookie.set("userId", userId);
     cookie.set("userName", userName);
     cookie.set("fullName", fullName);
-    if (singUp) {
-      cookie.set("phoneNumber", phoneNumber);
-      cookie.set("hashedPassword", hashedPassword);
-      cookie.set("avatarUrl", avatarUrl);
-    }
+    cookie.set("phoneNumber", phoneNumber);
+    cookie.set("hashedPassword", hashedPassword);
+    cookie.set("avatarUrl", avatarUrl);
+
     window.location.reload();
   };
   return (

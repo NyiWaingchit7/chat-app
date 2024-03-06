@@ -4,19 +4,27 @@ import bcrypt from "bcrypt";
 import { StreamChat } from "stream-chat";
 import dotenv from "dotenv";
 dotenv.config();
-const apiKey = process.env.STEAM_API_KEY;
-const appId = process.env.STEAM_APP_ID;
-const apiSecret = process.env.STREAM_API_SECRET;
+const api_key = process.env.STREAM_API_KEY;
+const app_id = process.env.STREAM_APP_ID;
+const api_secret = process.env.STREAM_API_SECRET;
 export const signup = async (req, res) => {
   try {
-    const { fullName, userName, password, phoneNumber } = req.body;
+    const { fullName, userName, password, phoneNumber, avatarUrl } = req.body;
     const userId = crypto.randomBytes(16).toString("hex");
-    const serverClient = connect(apiKey, apiSecret, appId);
-    const hashedPassword = bcrypt.hash(password, 10);
+    const serverClient = connect(api_key, api_secret, app_id);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const token = serverClient.createUserToken(userId);
     return res
       .status(200)
-      .json({ token, fullName, userName, userId, hashedPassword, phoneNumber });
+      .json({
+        token,
+        fullName,
+        userName,
+        userId,
+        hashedPassword,
+        phoneNumber,
+        avatarUrl,
+      });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error });
@@ -24,22 +32,34 @@ export const signup = async (req, res) => {
 };
 export const login = async (req, res) => {
   try {
-    const { fullName, password } = req.body;
-    const serverClient = connect(apiKey, apiSecret, appId);
-    const client = StreamChat.getInstance(apiKey, apiSecret);
-    const { user } = client.queryUsers({ name: fullName });
-    if (!user) return res.status(400).json({ message: "User Not Found" });
+    const { userName, password } = req.body;
+    const serverClient = connect(api_key, api_secret, app_id);
+
+    const client = StreamChat.getInstance(api_key, api_secret);
+    const { users } = await client.queryUsers({ name: userName });
+    const fullName = users[0].fullName;
+    const phoneNumber = users[0].phoneNumber;
+    const avatarUrl = users[0].image;
+
+    const hashedPassword = users[0].hashedPassword;
+    console.log(fullName, phoneNumber, hashedPassword);
+
+    if (!users.length)
+      return res.status(400).json({ message: "User Not Found" });
     const isCorrectPassword = await bcrypt.compare(
       password,
-      user[0].hashedPassword
+      users[0].hashedPassword
     );
-    const token = serverClient.createUserToken(user[0].id);
+    const token = serverClient.createUserToken(users[0].id);
     if (isCorrectPassword) {
       return res.status(200).json({
-        fullName: user[0].fullName,
+        fullName,
         userName,
         token,
-        userId: user[0].id,
+        userId: users[0].id,
+        hashedPassword,
+        phoneNumber,
+        avatarUrl,
       });
     } else {
       return res.status(400).json({ message: "Incorrect Password" });
