@@ -50,10 +50,21 @@ const ChannelListContent = ({
               setIsCreating={setIsCreating}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
+              setToggle={setToggle}
             />
           )}
           Preview={(previewProps) => (
-            <TeamChannelPreview {...previewProps} type="team" />
+            <TeamChannelPreview
+              {...previewProps}
+              createType={createType}
+              setCreateType={setCreateType}
+              isCreating={isCreating}
+              setIsCreating={setIsCreating}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              setToggle={setToggle}
+              type="team"
+            />
           )}
         />
         <ChannelList
@@ -69,10 +80,21 @@ const ChannelListContent = ({
               setIsCreating={setIsCreating}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
+              setToggle={setToggle}
             />
           )}
           Preview={(previewProps) => (
-            <TeamChannelPreview {...previewProps} type="messaging" />
+            <TeamChannelPreview
+              {...previewProps}
+              createType={createType}
+              setCreateType={setCreateType}
+              isCreating={isCreating}
+              setIsCreating={setIsCreating}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              setToggle={setToggle}
+              type="messaging"
+            />
           )}
         />
       </div>

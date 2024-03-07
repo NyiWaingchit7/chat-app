@@ -18,9 +18,7 @@ const UserItem = ({ user, setSelectedUsers }) => {
   const handleSelect = () => {
     if (selected) {
       setSelectedUsers((preUsers) =>
-        preUsers.filter((preUsers) =>
-          preUsers.filter((preUser) => preUser !== user.id)
-        )
+        preUsers.filter((preUser) => preUser !== user.id)
       );
     } else {
       setSelectedUsers((preUsers) => [...preUsers, user.id]);

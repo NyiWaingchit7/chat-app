@@ -11,6 +11,7 @@ const TeamChannelList = ({
   setIsCreating,
   isEditing,
   setIsEditing,
+  setToggle,
 }) => {
   if (error) {
     return type === "team" ? (
@@ -44,6 +45,7 @@ const TeamChannelList = ({
           setIsCreating={setIsCreating}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
+          setToggle={setToggle}
           type={type === "team" ? "team" : "messaging"}
         />
       </div>

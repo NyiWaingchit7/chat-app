@@ -29,20 +29,19 @@ const ChannelListContainer = ({
           left: toggle ? "0%" : "-89%",
           backgroundColor: "#005fff",
         }}
+        onClick={() => setToggle(!toggle)}
       >
-        <div
-          className="channel-list__container-toggle"
-          onClick={() => setToggle(!toggle)}
-        ></div>
-        <ChannelListContent
-          createType={createType}
-          setCreateType={setCreateType}
-          isCreating={isCreating}
-          setIsCreating={setIsCreating}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          setToggle={setToggle}
-        />
+        <div className="channel-list__container-toggle">
+          <ChannelListContent
+            createType={createType}
+            setCreateType={setCreateType}
+            isCreating={isCreating}
+            setIsCreating={setIsCreating}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            setToggle={setToggle}
+          />
+        </div>
       </div>
     </>
   );
