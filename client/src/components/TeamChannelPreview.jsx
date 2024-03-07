@@ -14,13 +14,13 @@ const TeamChannelPreview = ({ channel, type }) => {
       ({ user }) => user.id !== client.userID
     );
     return (
-      <div className="channel-prieview__item single">
+      <div className="channel-preview__item single">
         <Avatar
           image={members[0]?.user?.image}
-          name={members[0]?.user?.fullName}
+          name={members[0]?.user?.fullName || members[0]?.user?.id}
           size={24}
         />
-        <p>{members[0]?.user?.fullName}</p>
+        <p>{members[0]?.user?.fullName || members[0]?.user?.id}</p>
       </div>
     );
   };
@@ -33,7 +33,7 @@ const TeamChannelPreview = ({ channel, type }) => {
       }
       onClick={() => console.log(channel)}
     >
-      {(type = "team" ? <ChannelPreview /> : <DirectPreview />)}
+      {type === "team" ? <ChannelPreview /> : <DirectPreview />}
     </div>
   );
 };
