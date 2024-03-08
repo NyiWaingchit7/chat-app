@@ -452,6 +452,7 @@ body {
   align-items: center;
   padding-top: 16px;
   border-top: 1px solid #00000033;
+  z-index: 10;
 }
 
 .channel-search__input__wrapper {
@@ -1727,7 +1728,7 @@ div.rta__autocomplete.str-chat__emojisearch {
   height: 100%;
   box-shadow: inset 1px 0px 0px rgba(0, 0, 0, 0.1);
   position: absolute;
-  width: 93%;
+  width: 90%;
   top: 0%;
   z-index: 5;
   transition: 0.8s ease;

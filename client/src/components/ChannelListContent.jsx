@@ -36,7 +36,7 @@ const ChannelListContent = ({
       <SideBar />
       <div className="channel-list__list__wrapper">
         <CompanyHeader />
-        <ChannelSearch />
+        <ChannelSearch setToggle={setToggle} />
         <ChannelList
           filters={{ members: { $in: [client.userID] } }}
           channelRenderFilterFn={customChannelTeamFilter}
