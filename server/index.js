@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use("/auth", authRoute);
 app.get("/", (req, res) => {
-  res.send("hello");
+  res.send("hello, vercel");
 });
 app.post("/", (req, res) => {
   const { message, user: sender, type, members } = req.body;
