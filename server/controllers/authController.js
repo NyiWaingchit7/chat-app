@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { connect } from "getstream";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { StreamChat } from "stream-chat";
 import dotenv from "dotenv";
 dotenv.config();
@@ -14,17 +14,15 @@ export const signup = async (req, res) => {
     const serverClient = connect(api_key, api_secret, app_id);
     const hashedPassword = await bcrypt.hash(password, 10);
     const token = serverClient.createUserToken(userId);
-    return res
-      .status(200)
-      .json({
-        token,
-        fullName,
-        userName,
-        userId,
-        hashedPassword,
-        phoneNumber,
-        avatarUrl,
-      });
+    return res.status(200).json({
+      token,
+      fullName,
+      userName,
+      userId,
+      hashedPassword,
+      phoneNumber,
+      avatarUrl,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error });
