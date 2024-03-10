@@ -53,7 +53,7 @@ const Auth = () => {
           <form onSubmit={handleOnSumbit}>
             {singUp && (
               <div className="auth__form-container_fields-content_input">
-                <label htmlFor="fullName">Full Name</label>
+                <label htmlFor="fullName">Full name</label>
                 <input
                   type="text"
                   placeholder="Full Name"
